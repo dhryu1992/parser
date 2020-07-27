@@ -5,22 +5,35 @@
 #include <stdlib.h>
 #define MAX_LENGTH     1025   // 최대 128자까지만 입력 받는다.
 
+char *sptr = 0, *eptr = 0, *ptr = 0;
+
 typedef char TElement;
+
+typedef struct eNodeList{
+    char _tagName[10];
+    char _text;
+    char _attribute[10];
+    char _val;
+}
+
 typedef struct elementNode{
     TElement data;
-    TElement aValue;
     struct eNode* parent;
     struct eNode* firstChild;
     struct eNode* lastChild;
-    struct eNode* childNodes[nodeNum];
+    struct eNode* childNodes[];
     struct eNode* nextSibling;
     struct eNode* prevSibling;
 }eNode;
 
-char *sptr = 0, *eptr = 0, *ptr = 0;
 
 int main()
 {    
+    for (int i = 0; i < sizeof(childNodes) / sizeof(struct eNode *); i++)    // 요소 개수만큼 반복
+    {
+        childNodes[i] = malloc(sizeof(struct eNode));
+    }
+
     FILE *fp = fopen("test.html","r");
     if (fp == NULL) {
         fclose(fp);
@@ -56,7 +69,7 @@ int main()
         if(strncmp(ptr,">",1)==0){//<태그>태그 확인
                 eptr=ptr;
                 saveTag(element,sptr,eptr,0);
-                printf("%s\n",element);
+                printf("docEle : %s\n",element);
                 ptr++;
                 headparse(element, text, tagname, temp);
                 bodyparse(element, text, tagname, value, temp, attname);

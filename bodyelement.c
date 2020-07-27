@@ -1,11 +1,5 @@
 #include "element.h"
 
-char *htemp;
-char *helement;
-char *htagname;
-char *htext;
-char *hvalue;
-char *hattname;
 extern char *sptr, *eptr, *ptr;
 
 void bodyparse(char *b_element, char *b_text, char *b_tagname, 
@@ -25,11 +19,11 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                         if(strncmp(ptr,"<",1)==0){//텍스트 출력
                             eptr=ptr;
                             saveTag(b_text,sptr,eptr,1);
-                            printf("%s\n",b_text);
+                            printf("bodyText : %s\n",b_text);
                         }
                         else if(strncmp(ptr,">",1)==0){//태그 출력
                             saveTag(b_tagname,eptr,ptr,2);
-                            printf("%s\n",b_tagname);
+                            printf("bodyTag : %s\n",b_tagname);
                             break;
                         }
                     }
@@ -41,19 +35,20 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                         if(strncmp(ptr," ",1)==0){
                             if(strncmp(eptr,"=",1)==0){
                                 saveTag(b_value,eptr,ptr,0);
-                                printf("%s\n",b_value);
+                                printf("body Val : %s\n",b_value);
                                 eptr=ptr;
                             }
                             else{
                                 saveTag(b_temp,eptr,ptr,0);
-                                copyTag(b_tagname,b_temp);//시작태그 네임(img)
+                                strcpy(b_tagname,b_temp);//시작태그 네임(img)
+                                printf("bodyTag : %s\n",b_tagname);
                                 eptr=ptr;
                             }
                             //속성, 밸류값 = 기준으로 분할하기   
                         }
                         else if(strncmp(ptr,"=",1)==0){
                             saveTag(b_attname,eptr,ptr,0);
-                            printf("%s\n",b_attname);
+                            printf("body Att : %s\n",b_attname);
                             eptr=ptr;
                         }
                         // else if(strncmp(ptr,"!",1)==0){
@@ -69,23 +64,31 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                             //열림 태그 끝낫을때 텍스트</태그> 구분
                             
                             if(strcmp(b_temp,"/body")==0){
-                                copyTag(b_element,b_temp);
+                                strcpy(b_element,b_temp);
+                                printf("docele : %s\n",b_element);
                                 break;
                             }
                             else if(strcmp(b_temp,"/body")!=0){
-                                copyTag(b_value,b_temp);
+                                if(strcmp(b_temp,"p")==0){
+                                    strcpy(b_tagname,b_temp);
+                                    printf("bodyTag : %s\n",b_tagname);
+                                }else{
+                                    strcpy(b_value,b_temp);
+                                    printf("bodyVal : %s\n",b_value);
+                                }
                                 ptr++;
                                 if(strncmp(ptr+1,"\n",1)!=0){
                                     while(1){
                                         ptr=&ptr[1];
                                         if(strncmp(ptr,"<",1)==0){//<p>태그 텍스트
                                             saveTag(b_text,eptr,ptr,0);
-                                            printf("%s\n",b_text);
+                                            printf("bodyText : %s\n",b_text);
+                                            // setPtr(&eptr,&ptr);
                                             eptr=ptr;
                                         }
                                         else if(strncmp(ptr,">",1)==0){
                                             saveTag(b_tagname,eptr,ptr,0);
-                                            printf("%s\n",b_tagname);
+                                            printf("bodyTag : %s\n",b_tagname);
                                             break;
                                         }
                                     }
@@ -98,7 +101,7 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                 if(strncmp(ptr,"\n",1)==0){//태그 없이 텍스트만 출력
                     eptr=&ptr[0];
                     saveTag(b_text,sptr,eptr,1);
-                    printf("%s\n",b_text);
+                    printf("bodyText : %s\n",b_text);
                     isspace=0;
                 }
             }
@@ -107,11 +110,7 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                 if(strcmp(b_element,"/body")==0){
                     break;
                 }
-            }               
+            }
         }
     }
-// free(htemp);
-// free(helement);
-// free(htagname);
-// free(htext);
 }

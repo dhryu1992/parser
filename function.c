@@ -66,5 +66,5 @@ void setPtr(char **start, char **end){
 void copyTag(char *name, char *buf)
 {
     strcpy(name,buf);
-    printf("%s\n",name);
+    printf("bodyele:%s\n",name);
 }

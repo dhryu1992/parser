@@ -1,9 +1,7 @@
 #include "element.h"
-char *h_temp;
-char *h_element;
-char *h_tagname;
-char *h_text;
+
 extern char *sptr, *eptr, *ptr;
+
 void headparse(char *h_element, char *h_text, char *h_tagname, char *h_temp){
     if(strcmp(h_element,"head")==0){
         ptr++;
@@ -15,13 +13,14 @@ void headparse(char *h_element, char *h_text, char *h_tagname, char *h_temp){
                 saveTag(h_temp,sptr,eptr,0);
                 sptr=eptr;
                 if(strcmp(h_temp,"/head")!=0){
-                    copyTag(h_tagname,h_temp);
+                    strcpy(h_tagname,h_temp);
+                    printf("headTag : %s\n",h_tagname);
                 }  
                 while(1){
                     if(strncmp(ptr,"<",1)==0){
                         eptr=ptr;
                         saveTag(h_text,sptr,eptr,0);
-                        printf("%s\n",h_text);
+                        printf("headText : %s\n",h_text);
                         break;
                     }
                     else if(strncmp(ptr,"\n",1)==0){
@@ -31,7 +30,8 @@ void headparse(char *h_element, char *h_text, char *h_tagname, char *h_temp){
                 }                         
             }
             if(strcmp(h_temp,"/head")==0){
-                copyTag(h_element,h_temp);
+                strcpy(h_tagname,h_temp);
+                printf("headTag : %s\n",h_tagname);
                 break;
             }  
             else if(strncmp(ptr,"<",1)==0){
