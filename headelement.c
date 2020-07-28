@@ -2,7 +2,7 @@
 
 extern char *sptr, *eptr, *ptr;
 
-void headparse(char *h_element, char *h_text, char *h_tagname, char *h_temp){
+void headParsing(char *h_element, char *h_text, char *h_tagname, char *h_temp){
     if(strcmp(h_element,"head")==0){
         ptr++;
         // setPtr(&eptr,&ptr,0);

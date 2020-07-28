@@ -7,32 +7,15 @@
 
 char *sptr = 0, *eptr = 0, *ptr = 0;
 
-typedef char TElement;
-
-typedef struct eNodeList{
-    char _tagName[10];
-    char _text;
-    char _attribute[10];
-    char _val;
-}
-
-typedef struct elementNode{
-    TElement data;
-    struct eNode* parent;
-    struct eNode* firstChild;
-    struct eNode* lastChild;
-    struct eNode* childNodes[];
-    struct eNode* nextSibling;
-    struct eNode* prevSibling;
-}eNode;
-
 
 int main()
 {    
-    for (int i = 0; i < sizeof(childNodes) / sizeof(struct eNode *); i++)    // 요소 개수만큼 반복
-    {
-        childNodes[i] = malloc(sizeof(struct eNode));
-    }
+    // elementNode ele;
+//     ele = malloc(element(sizeof()))
+    // for (int i = 0; i < sizeof(childNodes) / sizeof(struct eNode *); i++)    // 요소 개수만큼 반복
+    // {
+    //     childNodes[i] = malloc(sizeof(struct eNode));
+    // }
 
     FILE *fp = fopen("test.html","r");
     if (fp == NULL) {
@@ -71,8 +54,9 @@ int main()
                 saveTag(element,sptr,eptr,0);
                 printf("docEle : %s\n",element);
                 ptr++;
-                headparse(element, text, tagname, temp);
-                bodyparse(element, text, tagname, value, temp, attname);
+                // docParsing(element, attname, value);
+                headParsing(element, text, tagname, temp);
+                bodyParsing(element, text, tagname, value, temp, attname);
         }
         else if(strncmp(ptr,"<",1)==0){// <검출 위의 if문과 합쳐져서 태그 획득
             sptr=&ptr[0];

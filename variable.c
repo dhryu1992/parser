@@ -16,3 +16,16 @@ char *value = malloc(sizeof(char)*MAX_LENGTH);
 *temp = 0;
 
 extern char *sptr = 0, *eptr = 0, *ptr = 0;
+
+typedef char TElement;
+
+typedef struct elementNode{
+    TElement data;
+    struct eNode* parent;
+    struct eNode* firstChild;
+    struct eNode* lastChild;
+    // struct eNode* childNodes[];
+    struct eNode* nextSibling;
+    struct eNode* prevSibling;
+}eNode;
+

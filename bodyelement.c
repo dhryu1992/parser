@@ -2,7 +2,7 @@
 
 extern char *sptr, *eptr, *ptr;
 
-void bodyparse(char *b_element, char *b_text, char *b_tagname, 
+void bodyParsing(char *b_element, char *b_text, char *b_tagname, 
                 char *b_value, char *b_temp, char *b_attname){
     int isspace=0;
     if(strcmp(b_element,"body")==0){//바디 태그 내용 추출
@@ -29,13 +29,14 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                     }
                 }
                 else if(strncmp(ptr,"<",1)==0){//태그 내부 출력
-                    eptr=&ptr[0];
+                    eptr=ptr;
+                    sptr=ptr;
                     while(1){
                         ptr=&ptr[1];
                         if(strncmp(ptr," ",1)==0){
                             if(strncmp(eptr,"=",1)==0){
                                 saveTag(b_value,eptr,ptr,0);
-                                printf("body Val : %s\n",b_value);
+                                printf("bodyVal : %s\n",b_value);
                                 eptr=ptr;
                             }
                             else{
@@ -47,8 +48,9 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                             //속성, 밸류값 = 기준으로 분할하기   
                         }
                         else if(strncmp(ptr,"=",1)==0){
+                            sptr=ptr;
                             saveTag(b_attname,eptr,ptr,0);
-                            printf("body Att : %s\n",b_attname);
+                            printf("bodyAtt : %s\n",b_attname);
                             eptr=ptr;
                         }
                         // else if(strncmp(ptr,"!",1)==0){
@@ -69,10 +71,10 @@ void bodyparse(char *b_element, char *b_text, char *b_tagname,
                                 break;
                             }
                             else if(strcmp(b_temp,"/body")!=0){
-                                if(strcmp(b_temp,"p")==0){
+                                if(strncmp(sptr,"<",1)==0){
                                     strcpy(b_tagname,b_temp);
                                     printf("bodyTag : %s\n",b_tagname);
-                                }else{
+                                }else if(strncmp(sptr,"=",1)==0){
                                     strcpy(b_value,b_temp);
                                     printf("bodyVal : %s\n",b_value);
                                 }
