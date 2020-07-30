@@ -17,10 +17,10 @@ char *value = malloc(sizeof(char)*MAX_LENGTH);
 
 extern char *sptr = 0, *eptr = 0, *ptr = 0;
 
-typedef char TElement;
+typedef char Element;
 
 typedef struct elementNode{
-    TElement data;
+    Element *data;
     struct eNode* parent;
     struct eNode* firstChild;
     struct eNode* lastChild;

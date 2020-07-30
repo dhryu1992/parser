@@ -12,5 +12,6 @@ extern char *text;
 extern char *attname;
 extern char *value;
 
-void headParsing();
-void bodyParsing();
+void headParsing(char*, char*, char*, char*);
+void bodyParsing(char*, char*, char*, char*, char*, char*);
+void docParsing(char*, char*, char*);

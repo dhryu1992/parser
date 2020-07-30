@@ -50,11 +50,7 @@ int main()
         ptr=&ptr[1]; 
         // if()
         if(strncmp(ptr,">",1)==0){//<태그>태그 확인
-                eptr=ptr;
-                saveTag(element,sptr,eptr,0);
-                printf("docEle : %s\n",element);
-                ptr++;
-                // docParsing(element, attname, value);
+                docParsing(element, attname, value);
                 headParsing(element, text, tagname, temp);
                 bodyParsing(element, text, tagname, value, temp, attname);
         }
