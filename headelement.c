@@ -14,6 +14,7 @@ void headParsing(char *h_element, char *h_text, char *h_tagname, char *h_temp){
                 sptr=eptr;
                 if(strcmp(h_temp,"/head")!=0){
                     strcpy(h_tagname,h_temp);
+                    count++
                     printf("headTag : %s\n",h_tagname);
                 }  
                 while(1){
