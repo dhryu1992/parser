@@ -53,7 +53,6 @@ int main()
                 docParsing(element, attname, value);
                 headParsing(element, text, tagname, temp);
                 bodyParsing(element, text, tagname, value, temp, attname);
-                
         }
         else if(strncmp(ptr,"<",1)==0){// <검출 위의 if문과 합쳐져서 태그 획득
             sptr=&ptr[0];

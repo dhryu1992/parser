@@ -91,7 +91,12 @@ void main(){
     int hNum = 0;
     int count = 0;
     
-    char *tag[100] = {"html","head","title","document","/title","/head","body","p","text","/p","h2","ab","/h2","div","abcd","/div","/body","/html","\0"}; //"img","src","pic_trulli.jpg","alt","\"Trulli\"","width","\"500\"","/"
+    char *tag[100] = {"html","head","title","document","/title","/head",
+                        "body",
+                        "p","text","/p",
+                        "h2","ab","/h2",
+                        "div","abcd","/div",
+                        "/body","/html","\0"}; //"img","src","pic_trulli.jpg","alt","\"Trulli\"","width","\"500\"","/"
     // tagname = "html";
     // if(strcmp(tag[11],"\0")==0){
     //     printf("ok\n");
@@ -108,10 +113,20 @@ void main(){
         }
         else{
             if(strncmp(tag[i],"/",1)==0){// /만나면 상위 노드로
-                for(int i = 0; i < count-1;i++){
-                    stp = stp->parent;
-                }
+            // printf("%s\n",stp->data);
+                
+                    for(int i = 0; i< count; i++)
+                    {
+                        // printf("asdf");
+                        stp = stp->parent;
+                        if(strcmp(stp->data,"body")==0)
+                        {
+                            count--;
+                        }
+                    }
+                
                 count = 0;
+                c_Num++;
                 // printf("%d\n",num);
                 // printf("2\n");
                 // printf("%s\n",stp->data);
@@ -120,29 +135,32 @@ void main(){
                 node[num] = stp;
                 // printf("%d\n",num);
                 // printf("3\n");
-                // printf("%s\n",node[num]->data);
+                printf("%s\n",stp->data);
                 num++; hNum++; count++;
                 c_Num = 0;
             }else{
                 if(strcmp(tag[i],"document")==0){
                     stp = addNode(tag[i],stp,c_Num);
                     node[num] = stp;
+                    // printf("%d\n",c_Num);
                     // printf("%d\n",num);
                     // printf("3\n");
-                    // printf("%s\n",node[num]->data);
-                    stp = stp->parent;
-                    
-                    num++; c_Num++; count++;
+                    printf("%s\n",node[num]->data);
+                    // printf("%d\n",c_Num);
+                    num++; count++;
                 }else{
                     // printf("%s\n",tag[i]);
+                    // printf("%d\n",c_Num);
                     stp = addNode(tag[i],stp,c_Num);
                     node[num] = stp;
-                    // printf("%d\n",num);
+                    // printf("%d\n",c_Num);
+                    
                     // printf("3\n");
-                    // printf("%s\n",node[num]->data);
-                    num++; c_Num++; count++;
+                    printf("%s\n",node[num]->data);
+                    num++; count++;
                 }
             }
+            // printf("%s\n",stp->data);
         }
         i++;
     }
@@ -156,23 +174,25 @@ void main(){
     // node[2] = stp;
     
     printf("okokok\n");
-    stp = node[0];
+    stp = node[0]->childnode[0];
     printf("%s\n",stp->data);
-    stp = node[0]->first;
-    printf("ㄴ%s\n",stp->data);
-    stp = node[1]->first;
-    printf("  ㄴ--%s\n",stp->data);
-    stp = node[2]->first;
-    printf("ㄴ--%s\n",stp->data);
-    stp = node[0]->last;
-    printf("ㄴ%s\n",stp->data);
-    stp = node[4]->first;
-    printf("  ㄴ--%s\n",stp->data);
-    stp = node[4]->last;
-    printf("  ㄴ--%s\n",stp->data);
+    stp = node[4]->childnode[0];
+    printf("%s\n",stp->data);
+    // stp = node[0]->first;
+    // printf("ㄴ%s\n",stp->data);
+    // stp = node[1]->first;
+    // printf("  ㄴ--%s\n",stp->data);
+    // stp = node[2]->first;
+    // printf("ㄴ--%s\n",stp->data);
+    // stp = node[0]->last;
+    // printf("ㄴ%s\n",stp->data);
+    // stp = node[4]->first;
+    // printf("  ㄴ--%s\n",stp->data);
+    // stp = node[4]->last;
+    // printf("  ㄴ--%s\n",stp->data);
 
-    stp = node[0]->childnode[1];
-    printf("%s\n",stp->data);
+    // stp = node[0]->childnode[1];
+    // printf("%s\n",stp->data);
     
     for(int i = 0; i < num; i++){
         free(node[i]);
