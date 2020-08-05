@@ -71,7 +71,7 @@ void main(){
                         "p","text","/p",
                         "h2","ab","/h2",
                         "div","abcd","/div",
-                        "img","src","pic_trulli.jpg","alt","\"Trulli\"","width","\"500\"","/img",
+                        "img","src","\"pic_trulli.jpg\"","alt","\"Trulli\"","width","\"500\"","/img",
                         "div","aaaa","/div",
                         "/body","/html","\0"}; 
     while(strcmp(tag[n],"\0")!=0){//마지막에 /html태그 출력 안됨
@@ -103,7 +103,7 @@ void main(){
                 while(1){
                     sstp = addSib(tag[n],sstp);
                     node[num] = sstp;
-                    printf("%s\n",sstp->data);
+                    printf("%d : %s\n",num,sstp->data);
 
                     num++;n++;
                     node[num]=addNode(tag[n],sstp,0);
@@ -163,19 +163,19 @@ void main(){
     stp = node[9]->childnode[0];
     printf("        ㄴ%s\n",stp->data);
     stp = node[4]->childnode[3];
-    printf("%s\n",stp->data);
+    printf("    ㄴ%s\n",stp->data);
     stp = node[11]->nextSib;
-    printf("    ㅏ%s\n",stp->data);
+    printf("        ㅏ%s\n",stp->data);
     stp = node[12]->childnode[0];
-    printf("    ㅣ   ㄴ%s\n",stp->data);
+    printf("        ㅣ   ㄴ%s\n",stp->data);
     stp = node[13]->nextSib;
-    printf("    ㅏ%s\n",stp->data);
+    printf("        ㅏ%s\n",stp->data);
     stp = node[14]->childnode[0];
-    printf("    ㅣ   ㄴ%s\n",stp->data);
+    printf("        ㅣ   ㄴ%s\n",stp->data);
     stp = node[15]->nextSib;
-    printf("     ㄴ%s\n",stp->data);
-    stp = node[16]->childnode[0];
     printf("         ㄴ%s\n",stp->data);
+    stp = node[16]->childnode[0];
+    printf("            ㄴ%s\n",stp->data);
     
 
 
