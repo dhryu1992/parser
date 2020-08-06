@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int num = 0;
-int n = 0;
+int n = 1;
 
 typedef struct ElementNode{
     char *data;
@@ -54,7 +54,7 @@ Node *addSib(char *text, Node *upper)
     return sibptr;
 }
 
-void main(){
+void structTest(char* tag[]){
     Node *stp = NULL;
     Node *sstp = NULL;
     Node *test = NULL;
@@ -66,15 +66,16 @@ void main(){
     int count = 0;
     int t_Num = 0;
     
-    char *tag[100] = {"html","head","title","document","/title","/head",
-                        "body",
-                        "p","text","/p",
-                        "h2","ab","/h2",
-                        "div","abcd","/div",
-                        "img","src","\"pic_trulli.jpg\"","alt","\"Trulli\"","width","\"500\"","/img",
-                        "div","aaaa","/div",
-                        "/body","/html","\0"}; 
-    while(strcmp(tag[n],"\0")!=0){//마지막에 /html태그 출력 안됨
+    // char *tag[100] = {"html","head","title","document","/title","/head",
+                        // "body",
+                        // "p","text","/p",
+                        // "h2","ab","/h2",
+                        // "div","abcd","/div",
+                        // "img","src","\"pic_trulli.jpg\"","alt","\"Trulli\"","width","\"500\"","/img",
+                        // "div","aaaa","/div",
+                        // "/body","/html","\0"};
+    // while(strcmp(tag[n],"\0")!=0){//마지막에 /html태그 출력 안됨
+    for(int y = 0; y <30; y++){
         if(stp==NULL){
             stp = newNode(tag[n]);
             node[num] = stp;
@@ -99,15 +100,19 @@ void main(){
                 num++; h_Num++; count;
                 c_Num = 0;
             }else if(strcmp(stp->data,"img")==0){
+                printf("imimimg\n");
                 sstp=stp;
                 while(1){
                     sstp = addSib(tag[n],sstp);
                     node[num] = sstp;
-                    printf("%d : %s\n",num,sstp->data);
-
+                    printf("11 %d : %s\n",num,sstp->data);
                     num++;n++;
                     node[num]=addNode(tag[n],sstp,0);
+                    printf("11 %d : %s\n",num,node[num]->data);
+                    num++; n++;
                     if(strcmp(tag[n],"/img")==0){
+                        c_Num++;
+                        count = 0;
                         stp = stp->parent;
                         break;
                     }
@@ -118,64 +123,55 @@ void main(){
                 }else{
                     stp = addNode(tag[n],stp,c_Num);
                 }
+                 
                 node[num] = stp;
                 printf("%d : %s\n",num, node[num]->data);
                 num++; count++;
-                
             }
         }
         n++;
     }
-    // int a = 1;
-    // stp=newEnode("body");
-    // node[0] = stp;
-    // stp=addNode("p",stp,0);
-    // node[1] = stp;
-    // stp = stp->parent;
-    // stp=addNode("img",stp,1);
-    // node[2] = stp;
-    
-    // printf("okokok\n");
-    // stp = node[0]->childnode[0];
-    // printf("%s\n",stp->data);
-    // stp = node[5]->childnode[0];
-    // printf("%s\n",stp->data);
-    stp = node[0];
+    stp = node[0];//html
     printf("%s\n",stp->data);
-    stp = node[0]->childnode[0];
-    printf(" ㄴ%s\n",stp->data);
-    stp = node[1]->childnode[0];
-    printf("    ㄴ%s\n",stp->data);
-    stp = node[2]->childnode[0];
-    printf("        ㄴ%s\n",stp->data);
-    stp = node[0]->childnode[1];
-    printf(" ㄴ%s\n",stp->data);
-    stp = node[4]->childnode[0];
-    printf("    ㄴ%s\n",stp->data);
-    stp = node[5]->childnode[0];
-    printf("        ㄴ%s\n",stp->data);
+    stp = stp->childnode[0];//head
+    printf(" └%s\n",stp->data);
+    stp = stp->childnode[0];//title
+    printf(" │  └%s\n",stp->data);
+    stp = stp->childnode[0];//documnet
+    printf(" │      └%s\n",stp->data);
+    stp = node[0]->childnode[1];//body
+    printf(" └%s\n",stp->data);
+    stp = stp->childnode[0];//image
+    printf("    ├─%s\n",stp->data);
+    printf("    │  │\n");
+    stp = stp->nextSib;
+    printf("    │ %s\n",stp->data);
+    stp = stp->childnode[0];
+    printf("    │  ├─%s\n",stp->data);
+    stp = stp->nextSib;
+    printf("    │ %s\n",stp->data);
+    printf("    │  ├─\n");
+    stp = stp->nextSib;
+    printf("    │ %s\n",stp->data);
+    printf("    │  ├─\n");
+    stp = stp->nextSib;
+    printf("    │ %s\n",stp->data);
     stp = node[4]->childnode[1];
-    printf("    ㄴ%s\n",stp->data);
-    stp = node[7]->childnode[0];
-    printf("        ㄴ%s\n",stp->data);
+    printf("    └─ %s\n",stp->data);
+    stp = stp->childnode[0];
+    printf("        └%s\n",stp->data);
     stp = node[4]->childnode[2];
-    printf("    ㄴ%s\n",stp->data);
-    stp = node[9]->childnode[0];
-    printf("        ㄴ%s\n",stp->data);
+    printf("    └─ %s\n",stp->data);
+    stp = stp->childnode[0];
+    printf("       └─%s\n",stp->data);
     stp = node[4]->childnode[3];
-    printf("    ㄴ%s\n",stp->data);
-    stp = node[11]->nextSib;
-    printf("        ㅏ%s\n",stp->data);
-    stp = node[12]->childnode[0];
-    printf("        ㅣ   ㄴ%s\n",stp->data);
-    stp = node[13]->nextSib;
-    printf("        ㅏ%s\n",stp->data);
-    stp = node[14]->childnode[0];
-    printf("        ㅣ   ㄴ%s\n",stp->data);
-    stp = node[15]->nextSib;
-    printf("         ㄴ%s\n",stp->data);
-    stp = node[16]->childnode[0];
-    printf("            ㄴ%s\n",stp->data);
+    printf("    └─ %s\n",stp->data);
+    stp = stp->childnode[0];
+    printf("       └─%s\n",stp->data);
+    stp = node[4]->childnode[4];
+    printf("    └─ %s\n",stp->data);
+    stp = stp->childnode[0];
+    printf("       └─%s\n",stp->data);
     
 
 

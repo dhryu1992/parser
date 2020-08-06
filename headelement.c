@@ -1,6 +1,5 @@
 #include "element.h"
-
-extern char *sptr, *eptr, *ptr;
+#include "variable.h"
 
 void headParsing(char *h_element, char *h_text, char *h_tagname, char *h_temp){
     if(strcmp(h_element,"head")==0){
@@ -14,14 +13,13 @@ void headParsing(char *h_element, char *h_text, char *h_tagname, char *h_temp){
                 sptr=eptr;
                 if(strcmp(h_temp,"/head")!=0){
                     strcpy(h_tagname,h_temp);
-                    count++
-                    printf("headTag : %s\n",h_tagname);
+                    copyChar(h_tagname);
                 }  
                 while(1){
                     if(strncmp(ptr,"<",1)==0){
                         eptr=ptr;
                         saveTag(h_text,sptr,eptr,0);
-                        printf("headText : %s\n",h_text);
+                        copyChar(h_text);
                         break;
                     }
                     else if(strncmp(ptr,"\n",1)==0){
@@ -32,7 +30,7 @@ void headParsing(char *h_element, char *h_text, char *h_tagname, char *h_temp){
             }
             if(strcmp(h_temp,"/head")==0){
                 strcpy(h_tagname,h_temp);
-                printf("headTag : %s\n",h_tagname);
+                copyChar(h_tagname);
                 break;
             }  
             else if(strncmp(ptr,"<",1)==0){

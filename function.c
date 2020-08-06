@@ -1,4 +1,7 @@
 #include "function.h"
+#include "variable.h"
+extern char *arr[126];
+extern int arrnum;
 
 void saveTag(char *name, char *start, char *end, int num){
     
@@ -59,12 +62,20 @@ void rp_saveTag(char *name, char *start, char *end, int num){
     }
 }
 
-void setPtr(char **start, char **end){
-    *start=*end;
+int toDom(int n, char* name){
+    char *arr[100];
+    arr[n] = name;
+    printf("tree %d %s\n",n,arr[n]);
+    n++;
+    return n;
 }
 
-void copyTag(char *name, char *buf)
+char* copyChar(char* src)
 {
-    strcpy(name,buf);
-    printf("bodyele:%s\n",name);
+    char *dst = NULL;
+    dst = (char*)malloc(sizeof(char)*strlen(src+1));
+    strcpy(dst,src);
+    arr[arrnum] = dst;
+    // printf("12 %s\n",arr[arrnum]);
+    arrnum++;
 }

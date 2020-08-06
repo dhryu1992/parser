@@ -3,10 +3,9 @@
 #include <string.h>          // strlen 함수를 사용하기 위해!
 #include <malloc.h>          // malloc 함수, free 함수를 사용하기 위해!
 #include <stdlib.h>
-#define MAX_LENGTH     1025   // 최대 128자까지만 입력 받는다.
+#include "variable.h"
 
-char *sptr = 0, *eptr = 0, *ptr = 0;
-
+char *arr[126] = {0,};
 
 int main()
 {    
@@ -30,6 +29,9 @@ int main()
     char *text = malloc(sizeof(char)*MAX_LENGTH);
     char *attname = malloc(sizeof(char)*MAX_LENGTH);
     char *value = malloc(sizeof(char)*MAX_LENGTH);
+    for(int i = 0; i<126; i++){
+        arr[i] = malloc(sizeof(char));
+    }
  
     *context = 0;   *text = 0;
     *element = 0;   *tagname = 0;
@@ -50,17 +52,27 @@ int main()
         ptr=&ptr[1]; 
         // if()
         if(strncmp(ptr,">",1)==0){//<태그>태그 확인
-                docParsing(element, attname, value);
-                headParsing(element, text, tagname, temp);
-                bodyParsing(element, text, tagname, value, temp, attname);
+            docParsing(element, attname, value);
+        //    printf("%d %s\n",arrnum,arr[0]);
+            headParsing(element, text, tagname, temp);
+        //    printf("%d %s\n",arrnum,arr[1]);
+        //    printf("%d %s\n",arrnum,arr[2]);
+            bodyParsing(element, text, tagname, value, temp, attname);
         }
         else if(strncmp(ptr,"<",1)==0){// <검출 위의 if문과 합쳐져서 태그 획득
             sptr=&ptr[0];
         }       
     }
+    structTest(arr);
+    // while(strcmp(arr[i],"\0")!=0){
+    //     printf("arr[%d] %s\n",i, arr[i]);
+    //     free(arr[i]);
+    //     i++;
+    // }
+    
     free(context);  free(element);
     free(text);     free(tagname);
     free(attname);  free(temp);
-    free(value);
+    free(value);  
     return 0;    
 }

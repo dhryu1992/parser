@@ -1,9 +1,11 @@
+#ifndef FUNCTION__H
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-
-void saveTag(char *name, char *start, char *end, int num);
-void fp_saveTag(char *name, char *start, char *end, char **current, int num);
-void rp_saveTag(char *name, char *start, char *end, int num);
-void copyTag(char *name, char *buf);
-void setPtr(char **start, char **end);
+void saveTag(char *, char *, char *, int );
+void fp_saveTag(char *, char *, char *, char **, int );
+void rp_saveTag(char *, char *, char *, int );
+char* copyChar(char*);
+int toDom(int, char* );
+#endif
