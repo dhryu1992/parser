@@ -1,10 +1,6 @@
-#ifndef CREATEDOM_H
+#ifndef DOMVARIABLE_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "variable.h"
-
-int num = 0;
-int n = 1;
 
 typedef struct ElementNode{
     char *data;
@@ -16,8 +12,23 @@ typedef struct ElementNode{
     struct Node *prevSib;
 }Node;
 
+Node *node[100];
+Node *stp = NULL;
+Node *sstp = NULL;
+Node *test = NULL;   
+char *tagname;
+int c_Num = 0;
+int h_Num = 0;
+int count = 0;
+int t_Num = 0;
+int num = 0;
+int n = 0;
+
 Node *newNode(char *);
 Node *addNode(char *, Node *, int);
 Node *addSib(char *, Node *);
-void createDom(char*[]);
+
+char createDom(char*[],int*);
+void showTree();
+void freeNode();
 #endif

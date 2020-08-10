@@ -76,6 +76,6 @@ char* copyChar(char* src)
     dst = (char*)malloc(sizeof(char)*strlen(src+1));
     strcpy(dst,src);
     arr[arrnum] = dst;
-    // printf("12 %s\n",arr[arrnum]);
+    printf("%s\n",arr[arrnum]);
     arrnum++;
 }

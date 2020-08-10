@@ -6,30 +6,25 @@
 #include "variable.h"
 
 char *arr[126] = {0,};
+char *abc[2] = {"abc","bcd"};
+char *output;
+
 
 int main()
-{    
-    // elementNode ele;
-//     ele = malloc(element(sizeof()))
-    // for (int i = 0; i < sizeof(childNodes) / sizeof(struct eNode *); i++)    // 요소 개수만큼 반복
-    // {
-    //     childNodes[i] = malloc(sizeof(struct eNode));
-    // }
-
-    FILE *fp = fopen("test.html","r");
-    if (fp == NULL) {
-        fclose(fp);
-        return 1;
-    }
+{   
+    int a = 1;
+    int *order = &a;
+    int b = 0; 
+    int i = 0;
     char buffer[MAX_LENGTH] = {0, };
-    char *temp = malloc(sizeof(char)*MAX_LENGTH);
-    char *element = malloc(sizeof(char)*MAX_LENGTH);
-    char *tagname = malloc(sizeof(char)*MAX_LENGTH);
-    char *context = malloc(sizeof(char)*MAX_LENGTH);
-    char *text = malloc(sizeof(char)*MAX_LENGTH);
-    char *attname = malloc(sizeof(char)*MAX_LENGTH);
-    char *value = malloc(sizeof(char)*MAX_LENGTH);
-    for(int i = 0; i<126; i++){
+    char *temp = malloc(sizeof(char));
+    char *element = malloc(sizeof(char));
+    char *tagname = malloc(sizeof(char));
+    char *context = malloc(sizeof(char)*MAX_LENGTH*2);
+    char *text = malloc(sizeof(char));
+    char *attname = malloc(sizeof(char));
+    char *value = malloc(sizeof(char));
+    for(i = 0; i<126; i++){
         arr[i] = malloc(sizeof(char));
     }
  
@@ -37,6 +32,13 @@ int main()
     *element = 0;   *tagname = 0;
     *attname = 0;   *value = 0;
     *temp = 0;
+
+    FILE *fp = fopen("test.html","r");
+    if (fp == NULL) {
+        fclose(fp);
+        return 1;
+    }
+
     while((feof(fp)) == 0)  //파일 끝까지 1바이트씩 buffer로 읽어온 후 context로 이동
     {
         fread(&buffer,sizeof(char),1,fp);
@@ -47,23 +49,27 @@ int main()
     sptr=context;
     ptr=&sptr[1];
     eptr = &ptr[0];
-    int i = 0;
+    
     while(strncmp(ptr,"\0",1)!=0){
         ptr=&ptr[1]; 
-        // if()
         if(strncmp(ptr,">",1)==0){//<태그>태그 확인
             docParsing(element, attname, value);
-        //    printf("%d %s\n",arrnum,arr[0]);
             headParsing(element, text, tagname, temp);
-        //    printf("%d %s\n",arrnum,arr[1]);
-        //    printf("%d %s\n",arrnum,arr[2]);
             bodyParsing(element, text, tagname, value, temp, attname);
         }
         else if(strncmp(ptr,"<",1)==0){// <검출 위의 if문과 합쳐져서 태그 획득
             sptr=&ptr[0];
         }       
     }
-    createDom(arr);
+    
+    while(strcmp(arr[b],"\0")!=0){
+        createDom(arr,order);
+        b = *order;
+        // printf("%s\n",output);
+    }
+    showTree();
+    freeNode();
+    
     // while(strcmp(arr[i],"\0")!=0){
     //     printf("arr[%d] %s\n",i, arr[i]);
     //     free(arr[i]);

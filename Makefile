@@ -1,4 +1,4 @@
-gettagnew.out: bodyelement.o docparse.o function.o main.o headelement.o function.o createDom.o
+main.out: bodyelement.o docparse.o function.o main.o headelement.o function.o createDom.o
 		gcc -o main.out bodyelement.o docparse.o function.o main.o headelement.o createDom.o
 
 bodyelement.o: bodyelement.c element.h variable.h
@@ -16,5 +16,5 @@ function.o: function.c function.h variable.h
 main.o: main.c variable.h
 	gcc -c -o main.o main.c
 
-createDom.o: createDom.c createDom.h
+createDom.o: createDom.c domVariable.h
 	gcc -c -o createDom.o createDom.c
