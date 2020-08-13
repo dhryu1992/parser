@@ -1,7 +1,7 @@
 #include "function.h"
 #include "variable.h"
-extern char *arr[126];
-extern int arrnum;
+char *arr[126];
+int arrnum;
 
 void saveTag(char *name, char *start, char *end, int num){
     
@@ -76,6 +76,7 @@ char* copyChar(char* src)
     dst = (char*)malloc(sizeof(char)*strlen(src+1));
     strcpy(dst,src);
     arr[arrnum] = dst;
-    printf("%s\n",arr[arrnum]);
+    if(strcmp(arr[arrnum],"/img")!=0)
+        printf("%s\n",arr[arrnum]);
     arrnum++;
 }

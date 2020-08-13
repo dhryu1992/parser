@@ -6,15 +6,25 @@
 #include "variable.h"
 
 char *arr[126] = {0,};
-char *abc[2] = {"abc","bcd"};
 char *output;
 
+// typedef struct ElementNode{
+//     char *data;
+//     struct Node *first;
+//     struct Node *childnode[255]; //각 노드를 하위 노드로 만들기
+//     struct Node *last;
+//     struct Node *parent;
+//     struct Node *nextSib;
+//     struct Node *prevSib;
+// }Node;
 
-int main()
+int main(int argc,char ** argv[])
 {   
     int a = 1;
     int *order = &a;
+    int t_num;
     int b = 0; 
+    int c = 0;
     int i = 0;
     char buffer[MAX_LENGTH] = {0, };
     char *temp = malloc(sizeof(char));
@@ -33,26 +43,31 @@ int main()
     *attname = 0;   *value = 0;
     *temp = 0;
 
-    FILE *fp = fopen("test.html","r");
-    if (fp == NULL) {
-        fclose(fp);
-        return 1;
-    }
+    if(argc > 2)
+        printf("입력오류\n");
+    else{
+        FILE *fp = fopen(argv[1],"r");
+        if (fp == NULL) {
+            fclose(fp);
+            return 1;
+        }
 
-    while((feof(fp)) == 0)  //파일 끝까지 1바이트씩 buffer로 읽어온 후 context로 이동
-    {
-        fread(&buffer,sizeof(char),1,fp);
-        if(feof(fp)==0)
-            strcat(context,buffer);
+        while((feof(fp)) == 0)  //파일 끝까지 1바이트씩 buffer로 읽어온 후 context로 이동
+        {
+            fread(&buffer,sizeof(char),1,fp);
+            if(feof(fp)==0)
+                strcat(context,buffer);
+        }
+        fclose(fp);
     }
-    fclose(fp);
     sptr=context;
     ptr=&sptr[1];
     eptr = &ptr[0];
-    
+    printf("--Parsing-- \n");
     while(strncmp(ptr,"\0",1)!=0){
         ptr=&ptr[1]; 
         if(strncmp(ptr,">",1)==0){//<태그>태그 확인
+            
             docParsing(element, attname, value);
             headParsing(element, text, tagname, temp);
             bodyParsing(element, text, tagname, value, temp, attname);
@@ -61,13 +76,23 @@ int main()
             sptr=&ptr[0];
         }       
     }
-    
-    while(strcmp(arr[b],"\0")!=0){
-        createDom(arr,order);
+    printf("--TreeNode-- \n");
+    while(1){
+        if(strcmp(arr[b],"\0")==0){
+            b = *order;
+            // printf("break;\n");
+            // printf("%d %d\n",b, *order);
+            break;
+        }
+        
+        createDom(arr,order,&t_num);
         b = *order;
+        // c = *t_num;
+        // printf("%d\n",b);
         // printf("%s\n",output);
     }
-    showTree();
+    printf("--Dom Tree-- \n");
+    showTree(t_num);
     freeNode();
     
     // while(strcmp(arr[i],"\0")!=0){
@@ -75,7 +100,9 @@ int main()
     //     free(arr[i]);
     //     i++;
     // }
-    
+    for(i = 0; i<126; i++){
+        free(arr[i]);
+    }
     free(context);  free(element);
     free(text);     free(tagname);
     free(attname);  free(temp);

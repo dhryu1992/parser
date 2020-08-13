@@ -22,13 +22,13 @@ int h_Num = 0;
 int count = 0;
 int t_Num = 0;
 int num = 0;
-int n = 0;
+int n = 1;
 
 Node *newNode(char *);
 Node *addNode(char *, Node *, int);
 Node *addSib(char *, Node *);
 
-char createDom(char*[],int*);
-void showTree();
+void createDom(char*[],int*, int*);
+void showTree(int);
 void freeNode();
 #endif

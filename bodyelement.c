@@ -35,30 +35,26 @@ void bodyParsing(char *b_element, char *b_text, char *b_tagname,
                     sptr=ptr;
                     while(1){
                         ptr=&ptr[1];
-                        if(strncmp(ptr," ",1)==0){
+                        if(strncmp(ptr," ",1)==0){//value값 
                             if(strncmp(eptr,"=",1)==0){
                                 saveTag(b_value,eptr,ptr,0);
                                 copyChar(b_value);
-                                //printf("%d\n",arrnum);
                                 eptr=ptr;
                             }
                             else{
                                 saveTag(b_temp,eptr,ptr,0);
                                 strcpy(b_tagname,b_temp);//시작태그 네임(img)
                                 copyChar(b_tagname);
-                                //printf("%d\n",arrnum);
                                 eptr=ptr;
-                            }
-                            //속성, 밸류값 = 기준으로 분할하기   
+                            }   
                         }
-                        else if(strncmp(ptr,"=",1)==0){
+                        else if(strncmp(ptr,"=",1)==0){//att값
                             sptr=ptr;
                             saveTag(b_attname,eptr,ptr,0);
                             copyChar(b_attname);
-                            //printf("%d\n",arrnum);
                             eptr=ptr;
                         }
-                        else if(strncmp(ptr,">",1)==0){
+                        else if(strncmp(ptr,">",1)==0){//마지막 value값
                             saveTag(b_temp,eptr,ptr,0);
                             eptr=ptr;
                             //열림 태그 끝낫을때 텍스트</태그> 구분
@@ -66,7 +62,6 @@ void bodyParsing(char *b_element, char *b_text, char *b_tagname,
                             if(strcmp(b_temp,"/body")==0){
                                 strcpy(b_element,b_temp);
                                 copyChar(b_element);
-                                //printf("%d\n",arrnum);
                                 break;
                             }
                             else if(strcmp(b_temp,"/body")!=0){

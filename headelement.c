@@ -4,10 +4,8 @@
 void headParsing(char *h_element, char *h_text, char *h_tagname, char *h_temp){
     if(strcmp(h_element,"head")==0){
         ptr++;
-        // setPtr(&eptr,&ptr,0);
         while(1){
             if(strncmp(ptr,">",1)==0){
-                // setPtr(&eptr,&ptr,0);
                 eptr=ptr;
                 saveTag(h_temp,sptr,eptr,0);
                 sptr=eptr;
