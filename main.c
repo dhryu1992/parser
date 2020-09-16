@@ -8,15 +8,6 @@
 char *arr[126] = {0,};
 char *output;
 
-// typedef struct ElementNode{
-//     char *data;
-//     struct Node *first;
-//     struct Node *childnode[255]; //각 노드를 하위 노드로 만들기
-//     struct Node *last;
-//     struct Node *parent;
-//     struct Node *nextSib;
-//     struct Node *prevSib;
-// }Node;
 
 int main(int argc,char ** argv[])
 {   
@@ -42,9 +33,9 @@ int main(int argc,char ** argv[])
     *element = 0;   *tagname = 0;
     *attname = 0;   *value = 0;
     *temp = 0;
-
+    
     if(argc > 2)
-        printf("입력오류\n");
+        printf("입력오류 (main.o 파일명)\n");
     else{
         FILE *fp = fopen(argv[1],"r");
         if (fp == NULL) {
