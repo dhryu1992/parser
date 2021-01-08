@@ -2,7 +2,7 @@
 #define __EXAMPLE_H__
 
 char *text[10] = {"abcd", "efgh", "ktfj", "We can make it"};
-char *img[] = {"/home/shu/mugGame/cairoExample/textCairo/arin.png"};
+char *img[] = {"/home/shu/myparser/cairo/arin.png"};
 int i = 0;
 int a = 0;
 int k = 0;
