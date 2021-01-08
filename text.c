@@ -2,20 +2,20 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <math.h>
-struct {
-    cairo_surface_t *image;
-} glob;
 
 static void do_drawing(cairo_t *);
 
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
+		gpointer user_data)
+{
 	do_drawing(cr);
 
 	return FALSE;
 }
 
+
 static void do_drawing(cairo_t *cr) {
-	int text_term = 30;
+	a = 30;
 
 	cairo_set_source_rgb(cr, 0.1, 0.1, 0.1);
 
@@ -25,26 +25,19 @@ static void do_drawing(cairo_t *cr) {
 	cairo_set_font_size(cr, 13);
 
 	for(int t = 0; t < 10; t++) {
-		cairo_move_to(cr, 50, a);
+		cairo_move_to(cr, 20, a);
 		cairo_show_text(cr, text[t]);
-		text_term = text_term + 30;
+		a = a + 30;
 	    }
-    
-    int hight = 50;
-    
-    for(int k = 0; k < 2; k++) {
-        if(img[0] != NULL) {
-            glob.image = cairo_image_surface_create_from_png(img[0]);
-            cairo_set_source_surface(cr, glob.image, 200, hight);
-            cairo_paint(cr);
-        }else {
-            printf("There is no image");
-        }
-    }
 }
+
 
 int main (int argc, char *argv[])
 {
+	
+	//printf("1\n");
+	//Array();	
+	//printf("2\n");
 	GtkWidget *window;
 	GtkWidget *darea;
 
@@ -72,8 +65,6 @@ int main (int argc, char *argv[])
 	gtk_widget_show_all(window);
 
 	gtk_main();
-
-    cairo_surface_destroy(glob.image);
 
 	return 0;
 }

@@ -1,20 +1,21 @@
 #include "domVariable.h"
 #include "variable.h"
 void createDom(char* tag[],int *order,int *t_num) {
-
+char *print[100];
 // for(int y = 0; y <30; y++){
-    if(stp==NULL){
+    if(stp == NULL) {
         stp = newNode(tag[n]);
         node[num] = stp;
-        printf("%d : %s\n",num, node[num]->data);
-        num++; count++;
+        printf("%d : %s\n", num, node[num] -> data);
+        num++; 
+        count++;
         // printf("%d : %s\n",num, node[num]->data);
     }
     else {
-        if(strncmp(tag[n],"/",1)==0) {// /만나면 상위 노드로
+        if(strncmp(tag[n], "/", 1) == 0) {// /만나면 상위 노드로
                 for(int i = 0; i < count; i++) {
                     stp = stp->parent;
-                    if(strcmp(stp->data, "body") == 0)
+                    if(strcmp(stp -> data, "body") == 0)
                     {
                         count--;
                     }
@@ -22,14 +23,14 @@ void createDom(char* tag[],int *order,int *t_num) {
             c_Num++;
             count = 0;
         }else if(strcmp(stp->data, "html") == 0) {
-            stp = addNode(tag[n],stp,h_Num);
+            stp = addNode(tag[n], stp, h_Num);
             node[num] = stp;
-            printf("%d : %s\n", num, node[num]->data); 
+            printf("%d : %s\n", num, node[num] -> data); 
             num++; 
             h_Num++; 
             count;
             c_Num = 0;
-        }else if(strcmp(stp->data,"img") == 0 ) {//이미지일경우
+        }else if(strcmp(stp -> data, "img") == 0) {//이미지일경우
             sstp=stp;
             while(1) {
                 sstp = addSib(tag[n], sstp);//att노드 생성
