@@ -1,12 +1,6 @@
 #ifndef __EXAMPLE_H__
 #define __EXAMPLE_H__
 
-char *text[10] = {"abcd", "efgh", "ktfj", "We can make it"};
-char *img[] = {"/home/shu/myparser/cairo/arin.png"};
-int i = 0;
-int a = 0;
-int k = 0;
-int t = 0;
-
-    
+char* img[] = {"/home/shu/myparser/cairo/instagram.png", "/home/shu/myparser/cairo/mini1.png"};
+char* text[] = {"abcd", "efgh", "ijkl"};
 #endif

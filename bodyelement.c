@@ -1,5 +1,6 @@
 #include "element.h"
 #include "variable.h"
+#include <stdlib.h>
 
 void bodyParsing(char *b_element, char *b_text, char *b_tagname, 
                 char *b_value, char *b_temp, char *b_attname) {
@@ -39,7 +40,17 @@ void bodyParsing(char *b_element, char *b_text, char *b_tagname,
                             if(strncmp(eptr, "=", 1) == 0) {
                                 saveTag(b_value, eptr, ptr, 0);
                                 copyChar(b_value);
-                                eptr = ptr;
+                                eptr = ptr;/*
+								char *cairoImg_copy = NULL;
+								cairoImg_copy = (char*)malloc(sizeof(char) * strlen(b_value + 1));
+									if(b_value != NULL) {
+										while(cairo_img[cairoImg_count] != NULL) {
+												cairoImg_count += 1;
+													}
+                                                strcpy(cairoImg_copy, b_value);
+												cairo_img[cairoImg_count] = cairoImg_copy;
+												printf("cairo_img[%d] = %s\n", cairoImg_count, cairoImg_copy);
+											}*/
                             }
                             else{
                                 saveTag(b_temp, eptr, ptr, 0);
@@ -72,6 +83,14 @@ void bodyParsing(char *b_element, char *b_text, char *b_tagname,
                                 }else if(strncmp(sptr, "=", 1) == 0) {
                                     strcpy(b_value, b_temp);
                                     copyChar(b_value);
+									/*char *cairoImg_copy = NULL;
+									cairoImg_count = cairoImg_count * 2 - cairoImg_count;
+									cairoImg_copy = (char*)malloc(sizeof(char) * strlen(b_value + 1));
+										if(b_value != NULL) {
+											strcpy(cairoImg_copy, b_value);
+											cairo_img[cairoImg_count] = cairoImg_copy;
+											//printf("cairo_img's last value[%d]: %s\n", cairoImg_count, cairo_img[cairoImg_count]);
+										}*/
                                     copyChar("/img");
                                     //printf("%d\n",arrnum);
                                 }
@@ -81,9 +100,18 @@ void bodyParsing(char *b_element, char *b_text, char *b_tagname,
                                         ptr = &ptr[1];
                                         if(strncmp(ptr, "<", 1) == 0) {//<p>태그 텍스트
                                             saveTag(b_text, eptr, ptr, 0);
-                                            copyChar(b_text);
-                                            //printf("%d\n",arrnum);
-                                            // setPtr(&eptr,&ptr);
+											copyChar(b_text);
+											/*int cairoText_count = 0;
+											char *cairoText_copy = NULL;
+											cairoText_copy = (char*)malloc(sizeof(char) * strlen(b_text + 1));
+												if(b_text != NULL) {
+													while(cairo_text[cairoText_count] != NULL) {
+														cairoText_count += 1;
+													}
+														strcpy(cairoText_copy, b_text);
+														cairo_text[cairoText_count] = cairoText_copy;
+												}
+											*/
                                             eptr = ptr;
                                         }
                                         else if(strncmp(ptr, ">", 1) == 0) {

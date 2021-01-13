@@ -7,7 +7,7 @@ void saveTag(char *name, char *start, char *end, int num) {
     
     switch(num) {
         case 0 :
-            memcpy(name, ++start,end - start);         //바디태그의 끝 >에서 한칸 옮긴 H ~ <까지 text에 넣음
+            memcpy(name, ++start, end - start);         //바디태그의 끝 >에서 한칸 옮긴 H ~ <까지 text에 넣음
             name[end - start] = 0;
             break;
         case 1 :
@@ -73,10 +73,55 @@ int toDom(int n, char* name) {
 char* copyChar(char* src)
 {
     char *dst = NULL;
-    dst = (char*)malloc(sizeof(char)*strlen(src+1));
+    dst = (char*)malloc(sizeof(char) * strlen(src + 1));
     strcpy(dst, src);
     arr[arrnum] = dst;
+	//int cairoCount;
+	//cairo_text[cairoCount] = dst;
     if(strcmp(arr[arrnum], "/img") != 0)
         printf("%s\n", arr[arrnum]);
     arrnum++;
 }
+
+char* cairoText(char* src) {
+	char* cairoTemp = malloc(sizeof(char) * 20);
+	strcpy(cairoTemp, src);
+	return cairoTemp;
+}
+
+/*char* cairoChar(char* src) {
+	char *cairo_temp = NULL;
+	cairo_temp = (char*)malloc(sizeof(char) * strlen(src + 1));
+	strcpy(cairo_temp, src);
+	cairo_text[arrnum] = cairo_temp;
+	arrnum++;
+}*/
+/*char* copyChar_text(char* src)
+{
+	char *cairo_text = NULL;
+    char *dst = NULL;
+    dst = (char*)malloc(sizeof(char)*strlen(src+1));
+	cairo_text = (char*)malloc(sizeof(char)*strlen(src+1));
+    strcpy(dst, src);
+	strcpy(cairo_text, src);
+    arr[arrnum] = dst;
+	cairo_text = dst;
+    if(strcmp(arr[arrnum], "/img") != 0)
+        printf("%s\n", arr[arrnum]);
+		//printf("chiro_text: %s\n", cairo_text[1024]);
+    arrnum++;
+}
+
+char* copyChar_value(char* src)
+{
+	char *cairo_value[1024];
+    char *dst = NULL;
+    dst = (char*)malloc(sizeof(char)*strlen(src+1));
+    strcpy(dst, src);
+    arr[arrnum] = dst;
+	cairo_value[1024] = dst;
+    if(strcmp(arr[arrnum], "/img") != 0)
+        printf("%s\n", arr[arrnum]);
+		printf("chiro_value: %s\n", cairo_value);
+    arrnum++;
+}*/

@@ -1,25 +1,21 @@
 #include "example.h"
 #include <cairo.h> 
 #include <gtk/gtk.h> 
+
+int main(int argc, char *argv[]) {
+
 struct { 
 	cairo_surface_t *image; 
 } glob; 
 
-static void do_drawing(cairo_t *); 
-
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-	do_drawing(cr); 
-
-    return FALSE; 
-}
-
-static void do_drawing(cairo_t *cr) {
-	int h = 10;
+//void do_drawing(cairo_t *); 
+void do_drawing(cairo_t *cr) {
+	int h = 50;
 	
 	for(int k = 0; k < 2; k++) {  	
-		if(img[0] != NULL) {
-			glob.image = cairo_image_surface_create_from_png(img[0]); 
-			cairo_set_source_surface(cr, glob.image, 10, h);
+		if(img[k] != NULL) {
+			glob.image = cairo_image_surface_create_from_png(img[k]); 
+			cairo_set_source_surface(cr, glob.image, 10, 250);
 			cairo_paint(cr);
 			//h = atoi(height[k]) + h;
 		}else{
@@ -28,8 +24,13 @@ static void do_drawing(cairo_t *cr) {
 	}	
 }
 
+gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+	do_drawing(cr); 
 
-int main(int argc, char *argv[]) {
+    return FALSE; 
+}
+
+
 	GtkWidget *window;
     GtkWidget *darea;
 	//Array();	
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
 
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER); 
 
-	gtk_window_set_default_size(GTK_WINDOW(window), 1280, 720); 
+	gtk_window_set_default_size(GTK_WINDOW(window), 1250, 800); 
 
 	gtk_window_set_title(GTK_WINDOW(window), "Image"); 
 

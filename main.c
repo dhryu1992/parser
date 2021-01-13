@@ -4,12 +4,15 @@
 #include <malloc.h>          // malloc 함수, free 함수를 사용하기 위해!
 #include <stdlib.h>
 #include "variable.h"
+#include "example.h"
+#include <cairo.h>
+#include <gtk/gtk.h>
+#include <math.h>
 
 char *arr[126] = {0,};
 char *output;
 
-
-int main(int argc,char ** argv[])
+int main(int argc, char *argv[])
 {   
     int a = 1;
     int *order = &a;
@@ -46,8 +49,8 @@ int main(int argc,char ** argv[])
         while((feof(fp)) == 0)  //파일 끝까지 1바이트씩 buffer로 읽어온 후 context로 이동
         {
             fread(&buffer,sizeof(char),1,fp);
-            if(feof(fp)==0)
-                strcat(context,buffer);
+            if(feof(fp)==0) // 파일의 포인터가 파일의 끝이 아닐때 
+                strcat(context, buffer); // buffer을 context 뒤에 이어붙힘.
         }
         fclose(fp);
     }
@@ -62,6 +65,7 @@ int main(int argc,char ** argv[])
             docParsing(element, attname, value);
             headParsing(element, text, tagname, temp);
             bodyParsing(element, text, tagname, value, temp, attname);
+			
         }
         else if(strncmp(ptr,"<",1)==0){// <검출 위의 if문과 합쳐져서 태그 획득
             sptr=&ptr[0];
@@ -85,11 +89,8 @@ int main(int argc,char ** argv[])
     printf("--Dom Tree-- \n");
     showTree(t_num);
     freeNode();
-    
     // while(strcmp(arr[i],"\0")!=0){
     //     printf("arr[%d] %s\n",i, arr[i]);
-    //     free(arr[i]);
-    //     i++;
     // }
     for(i = 0; i<126; i++){
         free(arr[i]);
@@ -98,5 +99,105 @@ int main(int argc,char ** argv[])
     free(text);     free(tagname);
     free(attname);  free(temp);
     free(value);  
+	
+	//printf("cairo_text: %s", cairo_text);
+    //-----Cairo---------------------------------------------------------------
+struct {
+    cairo_surface_t *image;
+	cairo_surface_t *surface;
+	gint img_width;
+	gint img_height;
+} glob;
+
+void do_drawing(cairo_t *cr) {
+//-----------------------------text--------------------
+	int text_term = 30;
+
+	cairo_set_source_rgb(cr, 0.1, 0.1, 0.1);
+
+	cairo_select_font_face(cr, "Purisa",
+			CAIRO_FONT_SLANT_NORMAL,
+			CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size(cr, 13);
+
+	for(int t = 0; t <= 3; t++) {
+		cairo_move_to(cr, 20, text_term);
+		cairo_show_text(cr, cairo_text[t]);
+		text_term = text_term + 30;
+	    }
+//--------------------------------image------------------
+    int hight = text_term;
+    for(int imgCount = 0; imgCount < 2; imgCount++) {
+        if(img[k] == NULL) {
+            printf("There is no image");
+        } else {
+        glob.image = cairo_image_surface_create_from_png(img[0]);
+		glob.img_width = cairo_image_surface_get_width(glob.image);
+		glob.img_height = cairo_image_surface_get_height(glob.image);  
+		glob.surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+		glob.img_width, glob.img_height);
+
+        cairo_set_source_surface(cr, glob.image, 400, hight);
+        cairo_paint(cr);
+            }
+        }
+		cairo_t *ic;
+
+		gint count = 0;
+
+		ic = cairo_create(glob.surface);
+
+		gint i, j;
+		for (i = 0; i <= glob.img_height; i+=7) {
+			for (j = 0 ; j < count; j++) {
+				cairo_move_to(ic, 0, i+j);
+				cairo_line_to(ic, glob.img_width, i+j);
+			}
+		}
+
+		count++;
+
+		cairo_set_source_surface(cr, glob.image, 10, 10);
+		cairo_mask_surface(cr, glob.surface, 10, 10);
+		cairo_stroke(ic);
+
+		cairo_destroy(ic);
+    }
+
+gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+	do_drawing(cr);
+
+	return FALSE;
+}
+	GtkWidget *window;
+	GtkWidget *darea;
+
+
+	gtk_init(&argc, &argv);
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+	darea = gtk_drawing_area_new();
+	gtk_container_add(GTK_CONTAINER(window), darea);
+
+	g_signal_connect(G_OBJECT(darea), "draw",
+			G_CALLBACK(on_draw_event), NULL);
+
+	g_signal_connect(G_OBJECT(window), "destroy",
+			G_CALLBACK(gtk_main_quit), NULL);
+
+
+	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+
+	gtk_window_set_default_size(GTK_WINDOW(window), 1300, 1000);
+
+	gtk_window_set_title(GTK_WINDOW(window), "Viewer");
+
+	gtk_widget_show_all(window);
+
+	gtk_main();
+
+    cairo_surface_destroy(glob.image);
+
     return 0;    
 }

@@ -1,21 +1,11 @@
-#include "example.h"
+//#include "example.h"
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <math.h>
-
+char *text[10] = {"abcd", "efgh"};
 static void do_drawing(cairo_t *);
-
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
-		gpointer user_data)
-{
-	do_drawing(cr);
-
-	return FALSE;
-}
-
-
 static void do_drawing(cairo_t *cr) {
-	a = 30;
+	int a = 30;
 
 	cairo_set_source_rgb(cr, 0.1, 0.1, 0.1);
 
@@ -32,9 +22,19 @@ static void do_drawing(cairo_t *cr) {
 }
 
 
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
+		gpointer user_data)
+{
+	do_drawing(cr);
+
+	return FALSE;
+}
+
 int main (int argc, char *argv[])
 {
 	
+
+
 	//printf("1\n");
 	//Array();	
 	//printf("2\n");

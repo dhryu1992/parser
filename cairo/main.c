@@ -25,23 +25,23 @@ static void do_drawing(cairo_t *cr) {
 	cairo_set_font_size(cr, 13);
 
 	for(int t = 0; t < 10; t++) {
-		cairo_move_to(cr, 50, a);
+		cairo_move_to(cr, 50, text_term);
 		cairo_show_text(cr, text[t]);
 		text_term = text_term + 30;
 	    }
     
-    int hight = 50;
-    
-    for(int k = 0; k < 2; k++) {
-        if(img[0] != NULL) {
-            glob.image = cairo_image_surface_create_from_png(img[0]);
-            cairo_set_source_surface(cr, glob.image, 200, hight);
-            cairo_paint(cr);
-        }else {
+    int hight = text_term;
+    for(int k = 0; k < 10; k++) {
+        if(img[k] == NULL) { 
             printf("There is no image");
+        } else {
+        glob.image = cairo_image_surface_create_from_png(img[k]);
+        cairo_set_source_surface(cr, glob.image, 200, hight);
+        cairo_paint(cr);
+            }
         }
     }
-}
+
 
 int main (int argc, char *argv[])
 {
@@ -65,7 +65,7 @@ int main (int argc, char *argv[])
 
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	
-	gtk_window_set_default_size(GTK_WINDOW(window), 1000, 1000);	
+	gtk_window_set_default_size(GTK_WINDOW(window), 1300, 10000);	
 	
 	gtk_window_set_title(GTK_WINDOW(window), "Viewer");
 	
