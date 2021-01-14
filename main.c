@@ -4,6 +4,7 @@
 #include <malloc.h>          // malloc 함수, free 함수를 사용하기 위해!
 #include <stdlib.h>
 #include "variable.h"
+#include "cairo_variable.h"
 #include "example.h"
 #include <cairo.h>
 #include <gtk/gtk.h>
@@ -104,9 +105,6 @@ int main(int argc, char *argv[])
     //-----Cairo---------------------------------------------------------------
 struct {
     cairo_surface_t *image;
-	cairo_surface_t *surface;
-	gint img_width;
-	gint img_height;
 } glob;
 
 void do_drawing(cairo_t *cr) {
@@ -131,37 +129,12 @@ void do_drawing(cairo_t *cr) {
         if(img[k] == NULL) {
             printf("There is no image");
         } else {
-        glob.image = cairo_image_surface_create_from_png(img[0]);
-		glob.img_width = cairo_image_surface_get_width(glob.image);
-		glob.img_height = cairo_image_surface_get_height(glob.image);  
-		glob.surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-		glob.img_width, glob.img_height);
+        glob.image = cairo_image_surface_create_from_png(cairo_img[0]);
 
-        cairo_set_source_surface(cr, glob.image, 400, hight);
+        cairo_set_source_surface(cr, glob.image, atoi(cairo_img[2]), atoi(cairo_img[3]));
         cairo_paint(cr);
             }
-        }
-		cairo_t *ic;
-
-		gint count = 0;
-
-		ic = cairo_create(glob.surface);
-
-		gint i, j;
-		for (i = 0; i <= glob.img_height; i+=7) {
-			for (j = 0 ; j < count; j++) {
-				cairo_move_to(ic, 0, i+j);
-				cairo_line_to(ic, glob.img_width, i+j);
-			}
 		}
-
-		count++;
-
-		cairo_set_source_surface(cr, glob.image, 10, 10);
-		cairo_mask_surface(cr, glob.surface, 10, 10);
-		cairo_stroke(ic);
-
-		cairo_destroy(ic);
     }
 
 gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {

@@ -5,7 +5,7 @@ char *arr[126];
 char *sptr, *eptr, *ptr;
 char* cairo_text[4];
 char* cairo_img[4];
-//int cairoImg_count = 0;
+int cairoImg_count;
 int arrnum;
 
 #endif

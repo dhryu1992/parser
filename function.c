@@ -83,13 +83,46 @@ char* copyChar(char* src)
     arrnum++;
 }
 
-char* cairoText(char* src) {
-	char* cairoTemp = malloc(sizeof(char) * 20);
-	strcpy(cairoTemp, src);
-	return cairoTemp;
+const char* namePush(char* src) {
+	return src;	
 }
 
-/*char* cairoChar(char* src) {
+const void eliminate(char* src) {
+	char msg[100];
+	char msgN[100];
+	sprintf(msg, src);
+	int i = 0, c = 0; // 쌍따옴표 제거
+	for(; i < strlen(msg); i++) {
+    //if (isalnum(msg[i]))  // msg 문자(a-z, A-Z, 0-9)를 제외한 모든것 제거하고 싶은 경우 사용
+    if (msg[i] != '\"') {
+        msgN[c] = msg[i];
+        c++;
+    }
+}
+	msgN[c] = '\0';
+	strcpy(src, msgN);
+	printf("New: %s\n", src);
+}
+
+
+/*char msg[100];
+
+char msgN[100];
+
+sprintf(msg, "This is text.");
+
+int i = 0, c = 0; // 쌍따옴표 제거
+for(; i < strlen(msg); i++)
+{
+    //if (isalnum(msg[i]))  // msg 문자(a-z, A-Z, 0-9)를 제외한 모든것 제거하고 싶은 경우 사용
+    if (msg[i] != '\"')             // msg 에서 쌍따옴표 제외
+    {
+        msgN[c] = msg[i];
+        c++;
+    }
+}
+msgN[c] = '\0';
+char* cairoChar(char* src) {
 	char *cairo_temp = NULL;
 	cairo_temp = (char*)malloc(sizeof(char) * strlen(src + 1));
 	strcpy(cairo_temp, src);
